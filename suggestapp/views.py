@@ -3,14 +3,15 @@ from django.shortcuts import render
 # Create your views here.
 from django.shortcuts import render
 from rest_framework import viewsets
-from .models import feedback,new_prompt
-from .serializers import feedbackSerializer,new_promptSerializer
+
+from users import permissions
+from .models import feedback,new_prompt, ApiProvider, ChatModels
+from .serializers import feedbackSerializer,new_promptSerializer, ApiProviderSerializer, ChatModelsSerializer
 from rest_framework import viewsets
 from rest_framework.permissions import IsAuthenticated,AllowAny 
 import time
 from rest_framework.response import Response
 from llamaapi import LlamaAPI
-from rest_framework.permissions import IsAuthenticated,AllowAny
 from rest_framework.views import APIView
 
 from django.http import StreamingHttpResponse
@@ -31,10 +32,19 @@ class new_promptViewSet(viewsets.ModelViewSet):
     serializer_class = new_promptSerializer
     permission_classes = [IsAuthenticated]
 
+class ApiProviderViewSet(viewsets.ModelViewSet):
+    queryset = ApiProvider.objects.all()
+    serializer_class = ApiProviderSerializer
+    permission_classes = [IsAuthenticated]
+
+class ChatModelsViewSet(viewsets.ModelViewSet):
+    queryset = ChatModels.objects.all()
+    serializer_class = ChatModelsSerializer
+    permission_classes = [IsAuthenticated]
 
 
 # Create your views here.
-LlamaApiKey = 'LL-GDqMzqyWPz9yyGfN7XfxxmADgZVQSeFzJZpXefKtAZnTPorX0a876K47qQ0dRxxC'
+LlamaApiKey = 'LL-q3khokDfa42vwWl5SMSexawTnNyJVqn1CsfoDW5BkpGB3uRD4Cd8OMyAn7780xNZ'
 
 
 
